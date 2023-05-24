@@ -1,12 +1,29 @@
+const {createPokemonDb, getPokemonDb} = require('../controllers/PokemonController.js');
+
 // ---> pokemon/?name=pikachu&vida=100
-const getAllPokemonsHandler = ( req  , res) => {
-    const { name , life } = req.query;
-    if( name || life) {
-       return res
-        .status(200)
-        .send(`Estos son los pokemons con nombre ${name} y vida ${life}`);
+const createPokemonHandler = async (req, res) => { 
+    const { name, life , attack , defense , weight} = req.body;
+    try {
+        const response = await createPokemonDb(name, life , attack, defense , weight);
+        res.status(200).json(response);
+    } catch (error) {
+        res.status(400).json({error: error.message})
     }
-   return res.status(200).send("Todos los usuarios");
+}
+const getAllPokemonsHandler = async( req  , res) => {
+    const { name } = req.query;
+    try {
+        if( name ) {
+            const response = await getPokemonDb(name);
+           return res
+            .status(200)
+            .json(response);
+        }
+        const response = await getPokemonDb();
+        return res.status(200).json(response);
+    } catch (error) {
+        return res.status(400).send({error: error.message});
+    }
 }
 
 const getPokemonIdHandler = (req, res) => {
@@ -14,11 +31,6 @@ const getPokemonIdHandler = (req, res) => {
     res.status(200).send(`Este es el pokemon con id ${id}`);
 }
 
-const createPokemonHandler = (req, res) => { 
-    const { name, life , attack } = req.body;
-    res.status(200)
-    .send(`El pokemon ${name} ha sido creado con vida ${life} y ataque ${attack}`);
-}
 module.exports = {
     getAllPokemonsHandler,
     getPokemonIdHandler,

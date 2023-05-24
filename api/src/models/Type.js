@@ -1,15 +1,16 @@
 const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
-    sequelize.define('type',{
+    sequelize.define('Type',{
             id: {
-                type: DataTypes.UUID,
+                type: DataTypes.INTEGER,
                 primaryKey: true,
-                defaultValue: DataTypes.UUIDV4
+                autoIncrement: true,
               },
               name: {
                 type: DataTypes.STRING,
                 allowNull: false,
               },
-        });
+      },
+      {timestamps: false , freezeTableName: true});
 }
