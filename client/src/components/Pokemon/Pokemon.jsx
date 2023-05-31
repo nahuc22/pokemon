@@ -8,6 +8,7 @@ const Pokemon = (props) => {
         <h1>{props.name}</h1>
       </div>
       <div className={style.pokemonDivisor}></div>
+      <img className={style.pokemonImg} src={props.img} alt={props.name}/>
       <div className={style.pokemonInfo}>
         HP: {props.hp}
         <br></br>

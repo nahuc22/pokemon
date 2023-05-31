@@ -7,8 +7,17 @@ export const POST_POKEMON = "POST_POKEMON";
 // ACTIONS 
 export function getPokemons() {
     return async function(dispatch) {
-        const pokemons = await axios.get('http://localhost:3001/pokemons');
-        console.log(pokemons)
+        try {
+            const pokemons = await axios.get('http://localhost:3001/pokemons');
+            console.log(pokemons)
+        dispatch({
+            type: GET_POKEMONS,
+            payload: pokemons.data
+        })
+        } catch (error) {
+            alert('No se pudo obtener los pokemons');
+        }
+        
     }
 }
 

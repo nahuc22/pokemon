@@ -1,4 +1,4 @@
-import { POST_POKEMON } from "../Actions";
+import { POST_POKEMON , GET_POKEMONS} from "../Actions";
 
 
 let initialState = {
@@ -9,10 +9,13 @@ function rootReducer (state = initialState, action)
 
 {
     switch(action.type){
-        case POST_POKEMON: 
-            break;
-        default:
-            break;
+        case GET_POKEMONS: 
+            return {
+                ...state,
+                allPokemons: action.payload
+            }
+            
+        default: return state;
     }
 }
 
