@@ -1,0 +1,23 @@
+.navContainer {
+    background-color: black;
+    display: flex;
+    width: 100%;
+    height: 50%;
+}
+.logo{ 
+    background-color: black;
+    display:flex;
+    width: 10rem;
+}
+.linkContainer{
+    display: flex;
+    width: 10rem;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 38.9vw;
+}
+.link{
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+}

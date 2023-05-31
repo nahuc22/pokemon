@@ -1,5 +1,4 @@
-const { Op } = require('sequelize');
-const { Pokemon , Type} = require('../db.js');
+const { Pokemon , Type } = require('../db.js');
 const axios = require('axios');
 
 
@@ -28,7 +27,7 @@ const createPokemonDb =  async (name,img, hp , attack , defense , speed , weight
 const getPokemonDb = async () => {
     const allPokemonDb = await Pokemon.findAll(
         {
-            attributes: ["id","img","name","attack","defense","speed","height","weight",],
+            attributes: ["id","img","name","attack","defense","speed","height","weight"],
             include : {
                 model: Type,
                 attributes: ['name'],

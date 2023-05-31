@@ -1,0 +1,13 @@
+.pokemonContainer{
+    background-color: red;
+    width: 20rem;
+    margin: 1rem;
+}
+.pokemonDivisor{
+    height: 1px;
+    background-color: black;
+}
+.pokemonInfo{
+    display: flex;
+    flex-direction: column;
+}
