@@ -1,7 +1,9 @@
 .pokemonContainer{
-    background-color: red;
+    background-color: purple;
     width: 20rem;
     margin: 1rem;
+    display: flex;
+    flex-wrap: wrap;
 }
 .pokemonDivisor{
     height: 1px;

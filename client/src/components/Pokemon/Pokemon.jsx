@@ -1,19 +1,26 @@
 import React from 'react'
 import style from "./Pokemon.module.css"
-const Pokemon = (props) => {
-  console.log(props)
+import {Link} from "react-router-dom"
+const Pokemon = (pokemon) => {
   return (
     <div className={style.pokemonContainer}>
+      
       <div className={style.pokemonTitle}>
-        <h1>{props.name}</h1>
+        <h1>{pokemon.name}</h1>
       </div>
+      
       <div className={style.pokemonDivisor}></div>
-      <img className={style.pokemonImg} src={props.img} alt={props.name}/>
+      <Link to={`/pokemon/${pokemon.id}`}>
+      <img className={style.pokemonImg} src={pokemon.img} alt={pokemon.name}/>
+      </Link>
       <div className={style.pokemonInfo}>
-        HP: {props.hp}
-        <br></br>
-        ATTACK: {props.attack}
+        HP: {pokemon.hp}
+        <br></br> 
+        ATTACK: {pokemon.attack}
+        <br></br> 
+        Types: {pokemon.types}       
       </div>
+
     </div>
   )
 }

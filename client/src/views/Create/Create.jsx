@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { postPokemon } from '../../redux/Actions'
+import { getPokemons, postPokemon } from '../../redux/Actions'
 
 
 const Create = () => {
@@ -69,7 +69,9 @@ const Create = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    dispatch(postPokemon(input))
+    dispatch(postPokemon(input)).then(() => {
+      dispatch(getPokemons())
+    })
   }
 
   const handleChange = (event) => {

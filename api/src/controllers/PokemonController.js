@@ -44,7 +44,7 @@ const getPokemonDb = async () => {
 
 
 const getPokemonApi = async () => {
-    const peticion = "https://pokeapi.co/api/v2/pokemon?limit=10";
+    const peticion = "https://pokeapi.co/api/v2/pokemon?limit=50";
     const apiResult = await axios(peticion);
     const arrPokemon = apiResult.data.results;
     const arrResult = [];
@@ -92,7 +92,12 @@ const getAllPokemons = async (name) => {
 const getPokemonById = async (id) => {
     const arrPokemonId = [];
     if(isNaN(id)){
-        const pokemonById = await Pokemon.findByPk(id);
+        const pokemonById = await Pokemon.findByPk(id, {
+            include: {
+                model: Type,
+                attributes: ['name'],
+            }
+        });
         return pokemonById;
     }
     const pokemon = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`);
