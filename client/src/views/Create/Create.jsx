@@ -84,6 +84,7 @@ const Create = () => {
       [event.target.name]: event.target.value} 
       , event.target.name)
   }
+  console.log(input.types)
   return (
     <div>
       <form onSubmit={handleSubmit}>
@@ -154,18 +155,18 @@ const Create = () => {
             />
             {errors.image}
           </div>
-          {/* <div>
+          <div>
             <select onChange={handleSelect}>
               <label>Types:</label>
               {types.map((type) => (
-                <option value={type.name}>{type.name}</option>
+                <option value={type.name}>{type.name}</option> 
               ))}
             </select>
             <ul>
-              <il>{input.type.map((ty) => ty + " ,")}</il>
+              <il>{input.type.map((ty) => ty + " ,")}</il>          
             </ul>
             {errors.type}
-          </div> */}
+          </div>
         <input disabled={disable()} type="submit" value="Enviar"></input>
       </form>
     </div>

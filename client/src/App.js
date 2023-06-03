@@ -1,9 +1,11 @@
 import './App.css';
 import Create from './views/Create/Create';
 import Details from './views/Details/Details';
-import { Route, BrowserRouter , Switch } from 'react-router-dom';
+import { Route, BrowserRouter , Switch} from 'react-router-dom';
 import Home from './views/Home/Home';
 import Landing from './views/Landing/Landing';
+
+
 function App() {  
   return (
     <BrowserRouter>

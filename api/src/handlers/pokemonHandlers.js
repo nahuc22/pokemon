@@ -2,9 +2,9 @@ const {createPokemonDb, getAllPokemons, getPokemonById} = require('../controller
 
 // ---> pokemon/?name=pikachu&vida=100
 const createPokemonHandler = async (req, res) => { 
-    const { name, img , hp , attack , defense ,speed, height ,weight , type} = req.body;
+    const { name, img , life , attack , defense ,speed, height ,weight , type} = req.body;
     try {
-        const newPokemon = await createPokemonDb(name, img , hp , attack, defense ,speed , height , weight , type);
+        const newPokemon = await createPokemonDb(name, img , life , attack, defense ,speed , height , weight , type);
         const types = Array.isArray(type) ? type : [type];
         const response = {...newPokemon.toJSON(), types}
         res.status(200).json(response);

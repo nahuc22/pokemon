@@ -2,7 +2,7 @@ import React, { useState , useEffect} from 'react'
 import style from "./Home.module.css"
 import Container from '../../components/Container/Container'
 import { useDispatch, useSelector } from 'react-redux'
-import { getPokemons, filter, getPokemonByName } from '../../redux/Actions'
+import { getPokemons, filter, getPokemonByName , getPokemonbyId, getType} from '../../redux/Actions'
 import NavBar from '../../components/NavBar/NavBar'
 const Home = () => {
   const dispatch = useDispatch()
@@ -22,7 +22,8 @@ const Home = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(getPokemonByName(searchString))
+    if(isNaN(searchString)) return dispatch(getPokemonByName(searchString))
+    dispatch(getPokemonbyId(searchString))
   }
 
   const nextPage = () => {
@@ -63,6 +64,10 @@ const Home = () => {
   const filterOrd = (event) => {
     dispatch(filter(event.target.value))
   }
+
+  useEffect(() => {
+    dispatch(getType())
+  }, [])
 
   useEffect(() => {
     setItems([...allPokemons].splice(0, ITEMS_PER_PAGE))

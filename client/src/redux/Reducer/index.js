@@ -1,9 +1,10 @@
-import { POST_POKEMON , GET_POKEMONS, FILTERS, GET_BY_NAME} from "../Actions";
+import { POST_POKEMON , GET_POKEMONS, FILTERS, GET_BY_NAME , GET_BY_ID, GET_TYPES} from "../Actions";
 
 
 let initialState = {
     allPokemons: [],
     pokemonsFiltered: [],
+    types: [],
     filters: false,
 }
 
@@ -21,6 +22,21 @@ function rootReducer (state = initialState, action)
                 ...state,
                 allPokemons: action.payload
             }
+        case GET_BY_ID:
+            return {
+                ...state,
+                allPokemons: action.payload
+            }
+        case POST_POKEMON:
+            return {
+                ...state,
+                allPokemons: action.payload
+            }
+        case GET_TYPES:
+            return {
+                ...state,
+                types: action.payload
+            }
         case FILTERS:{
             if(action.payload === "asc"){
                 return {
@@ -29,8 +45,7 @@ function rootReducer (state = initialState, action)
                     pokemonsFiltered: [...state.allPokemons].sort((a, b) => {
                         if(a.name > b.name) return 1
                         if(a.name < b.name) return -1
-                        return 0
-                            
+                        return 0         
                     })
                 }
             }

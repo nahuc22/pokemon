@@ -3,11 +3,10 @@ const axios = require('axios');
 
 
 
+const createPokemonDb =  async (name,img, life , attack , defense , speed , weight, height, type) => {
 
-const createPokemonDb =  async (name,img, hp , attack , defense , speed , weight, height, type) => {
-
-        if (name && img && hp && attack && defense && speed && height && weight) {
-            const pokemonCreated = await Pokemon.create({ name, img, hp, attack, defense, speed, height, weight });
+        if (name && img && life && attack && defense && speed && height && weight) {
+            const pokemonCreated = await Pokemon.create({ name, img, life, attack, defense, speed, height, weight });
 
             // Add the relation to its Types
             for (let index = 0; index < type.length; index++) {
@@ -27,7 +26,7 @@ const createPokemonDb =  async (name,img, hp , attack , defense , speed , weight
 const getPokemonDb = async () => {
     const allPokemonDb = await Pokemon.findAll(
         {
-            attributes: ["id","img","name","attack","defense","speed","height","weight"],
+            attributes: ["id","img","name","life","attack","defense","speed","height","weight"],
             include : {
                 model: Type,
                 attributes: ['name'],
@@ -44,7 +43,7 @@ const getPokemonDb = async () => {
 
 
 const getPokemonApi = async () => {
-    const peticion = "https://pokeapi.co/api/v2/pokemon?limit=50";
+    const peticion = "https://pokeapi.co/api/v2/pokemon?limit=10";
     const apiResult = await axios(peticion);
     const arrPokemon = apiResult.data.results;
     const arrResult = [];
@@ -74,13 +73,21 @@ const getPokemonApi = async () => {
 
 const getAllPokemons = async (name) => {
     const [pokemonDB, pokemonApi] = await Promise.all([getPokemonDb(), getPokemonApi()])
-    const allPokemon = [...pokemonDB, ...pokemonApi]
+    const pokemonDbArr = pokemonDB.map((pokemon) => {
+        return {
+            ...pokemon.dataValues,
+            Types: pokemon.dataValues.Types.map((type) => type.name),
+            source: 'db'
+        }
+    })
+    const allPokemon = [...pokemonDbArr, ...pokemonApi]
     if(name) {
         let filterPokemon = allPokemon.filter( (pokemon) => pokemon.name.toLowerCase().includes(name.toLowerCase()));
         if(filterPokemon.length){
             return filterPokemon
         }
     } else {
+        console.log(allPokemon)
         return allPokemon;
     }
 }

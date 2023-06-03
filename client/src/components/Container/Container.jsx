@@ -4,7 +4,8 @@ import style from "./Container.module.css"
 const Container = ({allPokemons}) => {
   return (
     <div className={style.container}>
-      {allPokemons?.map((pokemon) => (< Pokemon
+      {allPokemons?.map((pokemon, index) => (< Pokemon
+      key = {index}
       id={pokemon.id}
       img={pokemon.img} 
       hp={pokemon.life}

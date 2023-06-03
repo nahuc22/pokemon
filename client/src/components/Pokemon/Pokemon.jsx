@@ -3,8 +3,7 @@ import style from "./Pokemon.module.css"
 import {Link} from "react-router-dom"
 const Pokemon = (pokemon) => {
   return (
-    <div className={style.pokemonContainer}>
-      
+    <div className={style.pokemonContainer}> 
       <div className={style.pokemonTitle}>
         <h1>{pokemon.name}</h1>
       </div>

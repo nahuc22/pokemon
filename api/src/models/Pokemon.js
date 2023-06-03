@@ -23,7 +23,7 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: true
     },
-    hp: {
+    life: {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate : {

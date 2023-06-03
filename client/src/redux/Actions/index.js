@@ -5,6 +5,8 @@ export const GET_POKEMONS = "GET_POKEMONS";
 export const POST_POKEMON = "POST_POKEMON";
 export const FILTERS = "FILTERS"
 export const GET_BY_NAME ="GET_BY_NAME"
+export const GET_BY_ID = "GET_BY_ID"
+export const GET_TYPES = "GET_TYPES"
 
 // ACTIONS 
 export function getPokemons() {
@@ -38,6 +40,22 @@ export function getPokemonByName(name) {
     }
 }
 
+export function getPokemonbyId(id) {
+ try {
+    return async function (dispatch) {
+        const pokemon = await axios.get(`http://localhost:3001/pokemons/${id}`);
+        console.log(pokemon.data)
+        dispatch({
+            type: GET_BY_ID,
+            payload: pokemon.data
+        })
+    }
+ } catch (error) {
+    console.log(error);
+ }
+    
+}
+
 export function postPokemon(info) {
     return async function(dispatch) {
         try {
@@ -47,6 +65,21 @@ export function postPokemon(info) {
             console.log(error)
         }
     }   
+}
+
+export function getType(){
+    return async function(dispatch) {
+        try {
+            const pokemon = await axios.get('http://localhost:3001/types');
+            console.log(pokemon.data)
+            dispatch({
+                type: GET_TYPES,
+                payload: pokemon.data
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
 }
 
 export function filter(orden){
