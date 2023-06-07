@@ -1,8 +1,6 @@
 const { Pokemon , Type } = require('../db.js');
 const axios = require('axios');
-
-
-
+const {Op} = require('sequelize');
 const createPokemonDb =  async (name,img, life , attack , defense , speed , weight, height, type) => {
 
         if (name && img && life && attack && defense && speed && height && weight) {
@@ -13,9 +11,19 @@ const createPokemonDb =  async (name,img, life , attack , defense , speed , weig
                 let typeObj = await Type.findOne({ where: {name: type[index]} });
                 if (!typeObj)
                     console.log("post pokemon : type not found", type[index], typeObj, { where: {name: type[index]} });
-                await pokemonCreated.addType(typeObj);
+                await pokemonCreated.addTypes(typeObj);
             }
             return pokemonCreated;
+            // const newPokemon = await Pokemon.findOne({where: {name: name} , 
+            //     include: {
+            //     model : Type,
+            //     attributes: [
+            //         "name"
+            //     ]
+            // }})
+            // const newPokemonArr = {...newPokemon, 
+            //         newTypes: newPokemon.Types.map((type) => type.name) 
+            // }
         } 
  }
 
@@ -43,7 +51,7 @@ const getPokemonDb = async () => {
 
 
 const getPokemonApi = async () => {
-    const peticion = "https://pokeapi.co/api/v2/pokemon?limit=10";
+    const peticion = "https://pokeapi.co/api/v2/pokemon?limit=60";
     const apiResult = await axios(peticion);
     const arrPokemon = apiResult.data.results;
     const arrResult = [];
@@ -124,7 +132,52 @@ const getPokemonById = async (id) => {
         arrPokemonId.push(obj);
     return arrPokemonId;
 }
+const getPokemonByName = async (name) =>{
+    const arrPokemon = [];
+    const dbResponse = await Pokemon.findAll({
+        where: {
+            name: { [Op.iLike]: `%${name.toLowerCase()}%`},
+        },
+        include: {
+            model: Type,
+            attributes: ['name'],
+            through: {
+                attributes: []
+            }
+        }
+    })
+    for (let idx in dbResponse){
+        arrPokemon.push({
+        id: dbResponse[idx].dataValues.id,
+        name: dbResponse[idx].dataValues.name,
+        img: dbResponse[idx].dataValues.img,
+        life: dbResponse[idx].dataValues.life,
+        attack: dbResponse[idx].dataValues.attack,
+        defense: dbResponse[idx].dataValues.defense,
+        weight: dbResponse[idx].dataValues.weight,
+        height: dbResponse[idx].dataValues.height,
 
+        })
+    }
+    if(arrPokemon.length === 0) {
+        await axios.get(`https://pokeapi.co/api/v2/pokemon/${name.toLowerCase()}`)
+        .then(response => {
+            arrPokemon.push({
+                id: response.data.id,
+                name: response.data.name,
+                img: response.data.sprites.other.dream_world.front_default,
+                life: response.data.stats[0].base_stat,
+                attack: response.data.stats[1].base_stat,
+                defense: response.data.stats[2].base_stat,
+                speed: response.data.stats[5].base_stat,
+                height: response.data.height,
+                weight: response.data.weight,
+                Types: response.data.types.map((type) => type.type.name),
+            })
+        }) 
+    }
+    return arrPokemon;
+}
 //? POR ORDEN ASCENDENTE
 // const getPokemonByOrderAsc = async () => {
 //         const pokemonByOrderAsc = await Pokemon.findAll({
@@ -148,5 +201,6 @@ const getPokemonById = async (id) => {
 module.exports = {
     createPokemonDb,
     getAllPokemons,
-    getPokemonById
+    getPokemonById,
+    getPokemonByName
 }

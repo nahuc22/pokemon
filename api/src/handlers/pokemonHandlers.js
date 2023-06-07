@@ -1,13 +1,13 @@
-const {createPokemonDb, getAllPokemons, getPokemonById} = require('../controllers/PokemonController.js');
+const {createPokemonDb, getAllPokemons, getPokemonById, getPokemonByName} = require('../controllers/PokemonController.js');
 
 // ---> pokemon/?name=pikachu&vida=100
 const createPokemonHandler = async (req, res) => { 
     const { name, img , life , attack , defense ,speed, height ,weight , type} = req.body;
     try {
         const newPokemon = await createPokemonDb(name, img , life , attack, defense ,speed , height , weight , type);
-        const types = Array.isArray(type) ? type : [type];
-        const response = {...newPokemon.toJSON(), types}
-        res.status(200).json(response);
+        // const types = Array.isArray(type) ? type : [type];
+        // const response = {...newPokemon.toJSON(), types}
+        res.status(200).json(newPokemon);
     } catch (error) {
         res.status(400).json({error: error.message})
     }
@@ -16,7 +16,7 @@ const getAllPokemonsHandler = async( req  , res) => {
     const { name } = req.query;
     try {
         if( name ) {
-            const response = await getAllPokemons(name);
+            const response = await getPokemonByName(name);
            return res
             .status(200)
             .json(response);

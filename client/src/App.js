@@ -1,23 +1,23 @@
 import './App.css';
 import Create from './views/Create/Create';
 import Details from './views/Details/Details';
-import { Route, BrowserRouter , Switch} from 'react-router-dom';
+import NavBar from './components/NavBar/NavBar'
+import { Route, useLocation} from 'react-router-dom';
 import Home from './views/Home/Home';
 import Landing from './views/Landing/Landing';
 
 
+
 function App() {  
+  const location = useLocation();
   return (
-    <BrowserRouter>
       <div className="App">
-        <Switch>
+          {/* {location.pathname !== "/" && <NavBar/>} */}
           <Route exact path="/" component={Landing} />
-          <Route path="/home" component={Home} />
+          <Route exact path="/home" component={Home} />
           <Route path="/create" component={Create} />
           <Route path="/pokemon/:id" component={Details} />
-        </Switch>
       </div>
-    </BrowserRouter>
   );
 }
 

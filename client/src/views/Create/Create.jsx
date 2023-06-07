@@ -1,31 +1,31 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getPokemons, postPokemon } from '../../redux/Actions'
+import { getPokemons, postPokemon , getType} from '../../redux/Actions'
 
 
 const Create = () => {
 
   const [input, setInput] = useState({
       name: "",
-      hp: "",
-      attack: "",
-      defense: "",
-      speed: "",
-      height: "",
-      weight: "",
-      image: "",
+      life: 0,
+      attack: 0,
+      defense: 0,
+      speed: 0,
+      height: 0,
+      weight: 0,
+      img: "",
       type: [],
   })
   const [errors, setErrors] = useState({
     name: 'Name es requerido',
-    hp: 'Hp es requerido',
+    life: 'life es requerido',
     attack: 'Attack es requerido',
     type: ''
   })
   
   const dispatch = useDispatch();
-  // const types = useSelector((state) => state.Types);
+  const types = useSelector((state) => state.types);
 
   const disable = () => {
     let disabled = true;
@@ -39,6 +39,10 @@ const Create = () => {
     return disabled;
   }
 
+  useEffect (() => {
+    dispatch(getType())
+  }, [])
+
   const validate = (input , name) => {
     if (name === "name"){
 
@@ -46,10 +50,10 @@ const Create = () => {
       else  setErrors({...errors, name: 'Name es requerido'}) 
       return
 
-    } else if (name === "hp"){
+    } else if (name === "life"){
 
-      if (input.hp !== "") setErrors({...errors, hp: ''})
-      else setErrors({...errors, hp: 'Hp es requerido'})
+      if (input.life !== "") setErrors({...errors, life: ''})
+      else setErrors({...errors, life: 'life es requerido'})
       return
 
     } else if (name === "attack"){
@@ -69,6 +73,7 @@ const Create = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault()
+    console.log(input)
     dispatch(postPokemon(input)).then(() => {
       dispatch(getPokemons())
     })
@@ -84,12 +89,10 @@ const Create = () => {
       [event.target.name]: event.target.value} 
       , event.target.name)
   }
-  console.log(input.types)
+  console.log(types)
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        { console.log(input)}
-        { console.log(errors)}
         <div>
         <label>Name: </label>
             <input name='name' type="text"  value={input.name} onChange={handleChange}></input>
@@ -101,9 +104,9 @@ const Create = () => {
             {errors.attack}
         </div>
         <div>
-        <label>Hp: </label>
-            <input name="hp" type="number" value={input.hp} onChange={handleChange}></input>
-            {errors.hp}
+        <label>life: </label>
+            <input name="life" type="number" value={input.life} onChange={handleChange}></input>
+            {errors.life}
         </div>
         <div>
             <label>Defense:</label>
@@ -149,23 +152,19 @@ const Create = () => {
             <label>Image:</label>
             <input
               type="text"
-              value={input.image}
-              name="image"
+              value={input.img}
+              name="img"
               onChange={handleChange}
             />
-            {errors.image}
+            {errors.img}
           </div>
           <div>
             <select onChange={handleSelect}>
               <label>Types:</label>
               {types.map((type) => (
-                <option value={type.name}>{type.name}</option> 
+                <option name={type.name}>{type}</option> 
               ))}
             </select>
-            <ul>
-              <il>{input.type.map((ty) => ty + " ,")}</il>          
-            </ul>
-            {errors.type}
           </div>
         <input disabled={disable()} type="submit" value="Enviar"></input>
       </form>

@@ -4,6 +4,7 @@ import { POST_POKEMON , GET_POKEMONS, FILTERS, GET_BY_NAME , GET_BY_ID, GET_TYPE
 let initialState = {
     allPokemons: [],
     pokemonsFiltered: [],
+    pokemonsOrder: [],
     types: [],
     filters: false,
 }
@@ -20,7 +21,8 @@ function rootReducer (state = initialState, action)
         case GET_BY_NAME:
             return {
                 ...state,
-                allPokemons: action.payload
+                pokemonsFiltered: action.payload,
+                filters: true
             }
         case GET_BY_ID:
             return {
@@ -41,26 +43,19 @@ function rootReducer (state = initialState, action)
             if(action.payload === "asc"){
                 return {
                     ...state,
-                    filters: true,
-                    pokemonsFiltered: [...state.allPokemons].sort((a, b) => {
+                    filters: false,
+                    pokemonsOrder: [...state.allPokemons].sort((a, b) => {
                         if(a.name > b.name) return 1
                         if(a.name < b.name) return -1
                         return 0         
                     })
                 }
             }
-            else if(action.payload === "0"){
-                return {
-                    ...state,
-                    filters: false,
-                    pokemonsFiltered: []
-                } 
-            }
             else if (action.payload === "desc"){
                 return {
                     ...state,
-                    filters: true,
-                    pokemonsFiltered: [...state.allPokemons].sort((a, b) => {
+                    filters: false,
+                    pokemonsOrder: [...state.allPokemons].sort((a, b) => {
                         if(a.name > b.name) return -1
                         if(a.name < b.name) return 1; 
                         return 0;

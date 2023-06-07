@@ -1,4 +1,23 @@
-.homeContainer{
+.container{
     display: flex;
-    flex-wrap: wrap;
+    /* justify-content: center; */
+    align-items: center;
+    flex-direction: column;
+    background-image: url('../../assets/background4.jpg');
+}
+.label{
+    /* display: block; */
+    justify-content: space-between;
+    align-items: center;
+    /* padding: 3px; */
+    margin: 5%;
+}
+.select {
+    display: flex;
+}
+.order{
+    display: flexbox;
+}
+.h1{
+    color: white;
 }

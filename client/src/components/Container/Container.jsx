@@ -1,8 +1,8 @@
 import React from 'react'
 import Pokemon from '../Pokemon/Pokemon'
 import style from "./Container.module.css"
-const Container = ({allPokemons}) => {
-  return (
+const Container = ({allPokemons, lastIndex , firstIndex}) => {
+  return ( 
     <div className={style.container}>
       {allPokemons?.map((pokemon, index) => (< Pokemon
       key = {index}
@@ -12,7 +12,7 @@ const Container = ({allPokemons}) => {
       attack={pokemon.attack}
       name={pokemon.name}
       types={pokemon.Types && pokemon.Types.join(", ")}
-     />))}
+     />)).slice(firstIndex, lastIndex)}
     </div>
   )
 }

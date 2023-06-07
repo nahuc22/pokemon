@@ -28,7 +28,6 @@ export function getPokemonByName(name) {
     return async function (dispatch) {
         try {
             const pokemon = await axios.get(`http://localhost:3001/pokemons?name=${name}`);
-            console.log(pokemon.data)
             dispatch({
                 type: GET_BY_NAME,
                 payload: pokemon.data
@@ -43,8 +42,8 @@ export function getPokemonByName(name) {
 export function getPokemonbyId(id) {
  try {
     return async function (dispatch) {
+        console.log(id)
         const pokemon = await axios.get(`http://localhost:3001/pokemons/${id}`);
-        console.log(pokemon.data)
         dispatch({
             type: GET_BY_ID,
             payload: pokemon.data
@@ -61,6 +60,10 @@ export function postPokemon(info) {
         try {
             const pokemon = await axios.post('http://localhost:3001/pokemons', info);
             console.log(pokemon)
+            return dispatch({
+                    type: POST_POKEMON,
+                    payload: pokemon.data}
+                    )
         } catch (error) {
             console.log(error)
         }

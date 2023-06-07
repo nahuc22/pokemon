@@ -1,22 +1,30 @@
 import React, { useState , useEffect} from 'react'
 import style from "./Home.module.css"
 import Container from '../../components/Container/Container'
+import Page from '../../components/Page/Page'
 import { useDispatch, useSelector } from 'react-redux'
 import { getPokemons, filter, getPokemonByName , getPokemonbyId, getType} from '../../redux/Actions'
 import NavBar from '../../components/NavBar/NavBar'
 const Home = () => {
   const dispatch = useDispatch()
-  const ITEMS_PER_PAGE = 4;
   const allPokemons = useSelector((state) => state.allPokemons)
   const pokemonsFiltered = useSelector((state) => state.pokemonsFiltered)
+  const pokemonsOrder = useSelector((state) => state.pokemonsOrder)
+  const types = useSelector((state) => state.types)
   const filters = useSelector((state) => state.filters)
+
+  const [order, setOrder] = useState(false)
   const [searchString, setSearchString] = useState("")
   const [currentPage, setCurrentPage] = useState(0)
-  const [itemsFiltered, setItemsFiltered] = useState([...pokemonsFiltered].splice(0, ITEMS_PER_PAGE))
-  const [items, setItems] = useState([...allPokemons]?.splice(0, ITEMS_PER_PAGE))
+  const [pokemonPage, setPokemonPage] = useState(5)
+  const [selectedType, setSelectedType] = useState('');
+  const [filtered, setFiltered] = useState(filters)
+
+  const totalPokemons = allPokemons && allPokemons.length !== 0 ? allPokemons.length : 0  
+  const lastIndex = currentPage * pokemonPage;
+  const firstIndex = lastIndex - pokemonPage;
 
   const handleChange = (event) => {
-      event.preventDefault();
       setSearchString(event.target.value)
   }
 
@@ -26,72 +34,85 @@ const Home = () => {
     dispatch(getPokemonbyId(searchString))
   }
 
-  const nextPage = () => {
-    if(filters){
-      const next_page = currentPage + 1;
-      const firstIndex = next_page * ITEMS_PER_PAGE;
-      if(firstIndex>= allPokemons.length) return;
-      setItemsFiltered([...pokemonsFiltered].splice(firstIndex, ITEMS_PER_PAGE))
-      setCurrentPage(next_page)
-      return;
-    }
-    const next_page = currentPage + 1;
-    const firstIndex = next_page * ITEMS_PER_PAGE;
-    if(firstIndex>= allPokemons.length) return;
-    setItems([...allPokemons].splice(firstIndex, ITEMS_PER_PAGE))
-    setCurrentPage(next_page)
-  }
-  const prevPage = () => {
-    if(filters){
-      const prev_page = currentPage - 1;
-      const firstIndex = prev_page * ITEMS_PER_PAGE;
-      if (prev_page < 0) return;
-      setItemsFiltered([...pokemonsFiltered].splice(firstIndex, ITEMS_PER_PAGE))
-      setCurrentPage(prev_page)
-      return;
-    }
-    const prev_page = currentPage - 1;
-    const firstIndex = prev_page * ITEMS_PER_PAGE;
-    if(prev_page < 0) return;
-    setItems([...allPokemons].splice(firstIndex, ITEMS_PER_PAGE))
-    setCurrentPage(prev_page)
+  const reset = () => {
+    dispatch(getPokemons())
+    setSearchString("")
   }
   
   useEffect (() => {
-    dispatch(getPokemons())
+    if(allPokemons.length === 0){
+      dispatch(getPokemons())
+    }
+    dispatch(getType())
+    setCurrentPage(1) 
+    setFiltered(false)
   }, [])
 
   const filterOrd = (event) => {
-    dispatch(filter(event.target.value))
+    if(event.target.value == "0"){
+      dispatch(getPokemons())
+      setFiltered(false)
+      setOrder(false)
+      setCurrentPage(1)
+    }else{
+      dispatch(filter(event.target.value))
+      setFiltered(false)
+      setOrder(true)
+      setCurrentPage(1)
+    }
   }
 
-  useEffect(() => {
-    dispatch(getType())
-  }, [])
-
-  useEffect(() => {
-    setItems([...allPokemons].splice(0, ITEMS_PER_PAGE))
-  }, [allPokemons])
-
-  useEffect(() => {
-    setItemsFiltered([...pokemonsFiltered].splice(0, ITEMS_PER_PAGE))
-  }, [pokemonsFiltered])
-  
   return (
-    <div>
-      <NavBar handleChange={handleChange} handleSubmit={handleSubmit}/>
-      <div>
-        <label>Ordenamiento por Nombre</label>
+    <div >
+      <div >
+      <NavBar setOrder={setOrder} searchString={searchString} onChange={handleChange} filtered={filtered} setFiltered={setFiltered}/>
+      <div className={style.container}>
+        {/* <label className={style.label}>Ordenamiento por Nombre</label> */}
         
-        <select onChange={filterOrd} name="" id="">
+        <select className={style.select} onChange={filterOrd} name="" id="">
           <option defaultChecked value="0">-</option>
           <option value="asc">asc</option>
           <option value="desc">desc</option>
         </select>
-      {filters?<Container  allPokemons={itemsFiltered}/>: <Container allPokemons={items}/>}
-      <div>
-          <button onClick={prevPage}>prev</button><button onClick={nextPage}>next</button>
-        </div>
+
+          <h1 className={style.h1}>Tipos de Pokémon</h1>
+          <select value={selectedType} onChange={getType}>
+            <option value={selectedType}>Todos</option>
+            {types.map((type,index) => (
+              <option key={index} value={type}>{type}</option>
+            ))}
+          </select>
+          {/* <ul>
+        {types
+        .filter((type) => selectedType === '' || selectedType === type)
+        .map((type) => (
+
+            <ul>
+              {pokemonsFiltered
+                .filter((pokemon) => pokemon.type === type)
+                .map((pokemon) => (
+                  <Container key={pokemon.id} pokemon={pokemon} />
+                ))}
+                </ul>
+          
+        ))}
+      </ul> */}
+
+      {filtered
+      ? <Container allPokemons={pokemonsFiltered} lastIndex={lastIndex} firstIndex = {firstIndex}/>
+      : order? <Container allPokemons={pokemonsOrder} lastIndex={lastIndex} firstIndex={firstIndex}/> 
+      : <Container allPokemons={allPokemons} lastIndex={lastIndex} firstIndex={firstIndex}/>
+      }
+      <Page 
+      order={order} 
+      setOrder={setOrder} 
+      filtered={filtered} 
+      pokemonsFiltered={pokemonsFiltered}
+      currentPage={currentPage} 
+      pokemonPage={pokemonPage} 
+      totalPokemons={totalPokemons} 
+      setCurrentPage={setCurrentPage}/>
+      </div>
       </div>
     </div>
   )
