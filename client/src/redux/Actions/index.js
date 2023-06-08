@@ -7,6 +7,7 @@ export const FILTERS = "FILTERS"
 export const GET_BY_NAME ="GET_BY_NAME"
 export const GET_BY_ID = "GET_BY_ID"
 export const GET_TYPES = "GET_TYPES"
+export const TYPE_FILTER = "TYPE_FILTER"
 
 // ACTIONS 
 export function getPokemons() {
@@ -34,7 +35,7 @@ export function getPokemonByName(name) {
             })
             
         } catch (error) {
-            alert('No se pudo obtener el pokemon');
+            return alert('El pokemon no existe');   
         }
     }
 }
@@ -65,6 +66,7 @@ export function postPokemon(info) {
                     payload: pokemon.data}
                     )
         } catch (error) {
+            alert("No se pudo crear el pokemon, ya existe en la base de datos")
             console.log(error)
         }
     }   
@@ -83,6 +85,15 @@ export function getType(){
             console.log(error)
         }
     }
+}
+
+export function getPokemonTypeFilters(type){
+    return function(dispatch){
+        return dispatch({
+            type: TYPE_FILTER,
+            payload: type
+        })
+    }  
 }
 
 export function filter(orden){

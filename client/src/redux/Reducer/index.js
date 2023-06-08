@@ -1,4 +1,4 @@
-import { POST_POKEMON , GET_POKEMONS, FILTERS, GET_BY_NAME , GET_BY_ID, GET_TYPES} from "../Actions";
+import { POST_POKEMON , GET_POKEMONS, FILTERS, GET_BY_NAME , GET_BY_ID, GET_TYPES, TYPE_FILTER} from "../Actions";
 
 
 let initialState = {
@@ -6,6 +6,7 @@ let initialState = {
     pokemonsFiltered: [],
     pokemonsOrder: [],
     types: [],
+    typeFilter: [],
     filters: false,
 }
 
@@ -38,6 +39,13 @@ function rootReducer (state = initialState, action)
             return {
                 ...state,
                 types: action.payload
+            }
+        case TYPE_FILTER:
+            console.log(action.payload)
+            state.allPokemons.map((e) => console.log(e))
+            return {
+                ...state,
+                typeFilter: state.allPokemons.filter((e) => e.Types.includes(action.payload))
             }
         case FILTERS:{
             if(action.payload === "asc"){

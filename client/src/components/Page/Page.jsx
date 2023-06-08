@@ -1,10 +1,11 @@
 import React from 'react'
+import style from './Page.module.css'
 
-const Page = ({currentPage, pokemonPage , totalPokemons, setCurrentPage, filtered, pokemonsFiltered}) => {
-    console.log(pokemonsFiltered)
-    console.log(filtered)
+const Page = ({currentPage, pokemonPage , totalPokemons, setCurrentPage, filtered, pokemonsFiltered, type}) => {
     const pageNumber = [];
-    if(filtered){
+    console.log(filtered)
+    console.log(type)
+    if(filtered || type){
         for (let i = 1; i <= Math.ceil(filtered/pokemonPage); i++) {
             pageNumber.push(i);
         }
@@ -27,7 +28,7 @@ const Page = ({currentPage, pokemonPage , totalPokemons, setCurrentPage, filtere
     }   
   return (
     <div>
-        <button onClick={prevPage}>prev</button><button onClick={nextPage}>next</button>
+        <button className={style.bttn} onClick={prevPage}>Prev</button><button className={style.bttn}onClick={nextPage}>Next</button>
     </div>
   )
 }
