@@ -14,16 +14,6 @@ const createPokemonDb =  async (name,img, life , attack , defense , speed , weig
                 await pokemonCreated.addTypes(typeObj);
             }
             return pokemonCreated;
-            // const newPokemon = await Pokemon.findOne({where: {name: name} , 
-            //     include: {
-            //     model : Type,
-            //     attributes: [
-            //         "name"
-            //     ]
-            // }})
-            // const newPokemonArr = {...newPokemon, 
-            //         newTypes: newPokemon.Types.map((type) => type.name) 
-            // }
         } 
  }
 
@@ -146,6 +136,7 @@ const getPokemonByName = async (name) =>{
             }
         }
     })
+   
     for (let idx in dbResponse){
         arrPokemon.push({
         id: dbResponse[idx].dataValues.id,
@@ -156,7 +147,7 @@ const getPokemonByName = async (name) =>{
         defense: dbResponse[idx].dataValues.defense,
         weight: dbResponse[idx].dataValues.weight,
         height: dbResponse[idx].dataValues.height,
-
+        Types: dbResponse[idx].dataValues.Types.map((type) => type.name)    
         })
     }
     if(arrPokemon.length === 0) {

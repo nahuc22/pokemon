@@ -1,9 +1,9 @@
-.back {
-  --border-color: linear-gradient(-45deg, #ffae00, #af3ed8, #00fffb);
+.button {
+  --border-color: linear-gradient(-45deg, #ffae00, #7e03aa, #00fffb);
   --border-width: 0.125em;
-  --curve-size: 0.5em;
+  --curve-size: .5em;
   --blur: 30px;
-  --bg: #fbfafc;
+  --bg: #080312;
   --color: #ffffff;
   color: var(--color);
   /* use position: relative; so that BG is only for .button */
@@ -13,7 +13,7 @@
   isolation: isolate;
   display: inline-grid;
   margin-left: 20px;
-  place-content: initial;
+  place-content: center;
   padding: 0.5em 1.5em;
   font-size: 17px;
   border: 0;
@@ -30,14 +30,14 @@
   transition: color 250ms;
 }
 
-.back::after,
-.back::before {
+.button::after,
+.button::before {
   content: "";
   position: fixed;
   inset: 0;
 }
 
-.back::before {
+.button::before {
   background: var(--border-color);
   background-size: 300% 300%;
   animation: move-bg7234 5s ease infinite;
@@ -58,7 +58,7 @@
   }
 }
 
-.back::after {
+.button::after {
   background: var(--bg);
   z-index: -1;
   clip-path: polygon(
@@ -76,7 +76,7 @@
   transition: clip-path 500ms;
 }
 
-.back:where(:hover, :focus)::after {
+.button:where(:hover, :focus)::after {
   clip-path: polygon(
     /* Top-left */ calc(100% - var(--border-width))
       calc(100% - calc(var(--curve-size) + var(--border-width) * 0.5)),
@@ -94,8 +94,12 @@
   transition: 200ms;
 }
 
-.back:where(:hover, :focus) {
+.button:where(:hover, :focus) {
   color: #fff;
+}
+.linkHome{
+  text-decoration: none;
+  color: white;
 }
 .container {
   background-size: 100%;

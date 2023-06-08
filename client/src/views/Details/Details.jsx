@@ -7,21 +7,19 @@ const Details = () => {
   const {id} = useParams()
   const allPokemons = useSelector((state) => state.allPokemons)
   const pokemon = allPokemons.filter((pokemon) => pokemon.id == id)
-  console.log(pokemon)
   return (
-     <div >
-      <div >
-        <h1>{pokemon && pokemon[0].name}</h1>
-      </div>
-      <div className={style.img}></div>
-      <img src={pokemon[0].img} alt={pokemon[0].name}/>
-      <div >
-        HP: {pokemon[0].life}
-        <br></br> 
-        ATTACK: {pokemon[0].attack}
-        <br></br> 
-        Types: {pokemon[0].Types && pokemon[0].Types.join(", ")}       
-      </div>
+     <div className={style.container}>
+      <form class={style.form}>
+        <h1 class={style.h1}>{pokemon && pokemon[0].name}</h1>
+      
+        <img className={style.img} src={pokemon[0].img} alt={pokemon[0].name}/>
+
+        <label className={style.label}>HP: {pokemon[0].life}</label>
+        
+        <label className={style.label}>ATTACK: {pokemon[0].attack}</label>
+   
+        <label className={style.label}>Types: {pokemon[0].Types && pokemon[0].Types.join(", ")}</label>
+      </form>
 
     </div>
   )

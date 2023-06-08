@@ -1,18 +1,13 @@
 .container{
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
   background-image: url('../../assets/landing.jpg');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
 }
-/* display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh; */
 .button {
   --border-color: linear-gradient(-45deg, #ffae00, #7e03aa, #00fffb);
   --border-width: .125em;
@@ -24,7 +19,8 @@
     /* use position: relative; so that BG is only for .button */
   position: relative;
   isolation: isolate;
-  margin-left: auto;
+  display: inline-grid;
+  margin-left: 20px;
   place-content: center;
   padding: .5em 1.5em;
   font-size: 17px;

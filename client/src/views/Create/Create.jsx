@@ -89,8 +89,8 @@ const Create = () => {
   };
   return (
     <div className={style.container}>
-      <button className={style.back}>
-        <NavLink to={"/home"}>Go home</NavLink>
+      <button className={style.button}>
+        <NavLink className={style.linkHome}to={"/home"}>Go home</NavLink>
       </button>
       <form className={style.form} onSubmit={handleSubmit}>
         <h1 className={style.h1}>Create tu pokemon!</h1>

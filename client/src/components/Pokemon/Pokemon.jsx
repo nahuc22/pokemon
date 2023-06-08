@@ -2,6 +2,7 @@ import React from 'react'
 import style from "./Pokemon.module.css"
 import {Link} from "react-router-dom"
 const Pokemon = (pokemon) => {
+  console.log(pokemon);
   return (
     <div className={style.pokemonContainer}> 
       <div className={style.pokemonTitle}>
