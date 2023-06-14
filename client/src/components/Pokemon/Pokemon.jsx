@@ -2,7 +2,6 @@ import React from 'react'
 import style from "./Pokemon.module.css"
 import {Link} from "react-router-dom"
 const Pokemon = (pokemon) => {
-  console.log(pokemon);
   return (
     <div className={style.pokemonContainer}> 
       <div className={style.pokemonTitle}>
@@ -14,10 +13,8 @@ const Pokemon = (pokemon) => {
       <img className={style.pokemonImg} src={pokemon.img} alt={pokemon.name}/>
       </Link>
       <div className={style.pokemonInfo}>
-        HP: {pokemon.hp}
-        <br></br> 
-        ATTACK: {pokemon.attack}
-        <br></br> 
+          Attack: {pokemon.attack}
+        <br></br>
         Types: {pokemon.types}       
       </div>
 

@@ -1,11 +1,29 @@
-.container{ 
-    background-size: cover;
-    height: 80em;
-    text-align: center;
-    background-attachment: fixed;
+.papiContenedor{
     background-image: url('../../assets/background.jpg');
+    background-size: cover;
+    background-position: bottom center;
+    height: 100vh;
 }
 
+.selectContainer {
+    display: flex;
+    margin: 0px 15px;
+    align-items: center;
+    justify-content: center;
+}
+/* .divContainer {
+    
+} */
+.button {
+    margin: 0px 5px;
+    cursor: pointer;
+    border-radius: 5px;
+    height: 30px;
+    background-color: rgb(87, 85, 85);
+    color: white;
+    -webkit-box-shadow: 4px 5px 7px 1px rgba(0,0,0,0.77); 
+    box-shadow: 4px 5px 7px 1px rgba(0,0,0,0.77);
+}
 /* .label{
     display: block;
     justify-content: space-between;

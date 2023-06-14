@@ -1,36 +1,25 @@
 import React from 'react'
 import style from './Page.module.css'
 
-const Page = ({currentPage, pokemonPage , totalPokemons, setCurrentPage, filtered, pokemonsFiltered, type}) => {
-    const pageNumber = [];
-    console.log(filtered)
-    console.log(type)
-    if(filtered || type){
-        for (let i = 1; i <= Math.ceil(filtered/pokemonPage); i++) {
-            pageNumber.push(i);
-        }
-    }else {
-        for (let i = 1; i <= Math.ceil(totalPokemons/pokemonPage); i++) {
-            pageNumber.push(i);
-        }
-    }
-    
-    const prevPage = () => {
-        if (currentPage > 1 ) {
-            setCurrentPage(currentPage - 1);
-        }
-    }
+const Page = ({pokemonsPerPage, allPokemons , paginado}) => {
+    const pageNumbers = []
 
-    const nextPage = () => {
-        if(currentPage < pageNumber.length) {
-            setCurrentPage(currentPage + 1);    
-        }
-    }   
+    for( let i = 0 ; i < Math.ceil(allPokemons / pokemonsPerPage) ; i++) {
+        pageNumbers.push(i+1)
+    }
   return (
-    <div>
-        <button className={style.bttn} onClick={prevPage}>Prev</button><button className={style.bttn}onClick={nextPage}>Next</button>
-    </div>
+    <nav className={style.nav}>
+        <ul className={style.ul}>
+            {
+                pageNumbers?.map(number => (
+                    <li  key={number}>
+                        <p className={style.p} onClick={()=>paginado(number)}>{number}</p>
+                    </li>
+                ))
+            }
+        </ul>
+        
+    </nav>
   )
 }
-
 export default Page

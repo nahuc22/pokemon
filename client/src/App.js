@@ -12,9 +12,10 @@ function App() {
   const location = useLocation();
   return (
       <div className={style.container}>
-           {/* {location.pathname !== "/" && <NavBar/>}  */}
+           {location.pathname !== "/" && <NavBar/>} 
+
           <Route exact path="/" component={Landing} />
-          <Route exact path="/home" component={Home} />
+          <Route path="/home" component={Home} />
           <Route path="/create" component={Create} />
           <Route path="/pokemon/:id" component={Details} />
       </div>

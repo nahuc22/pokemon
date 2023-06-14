@@ -1,10 +1,10 @@
 import React from 'react'
 import Pokemon from '../Pokemon/Pokemon'
 import style from "./Container.module.css"
-const Container = ({allPokemons, lastIndex , firstIndex}) => {
+const Container = ({currentPokemons}) => {
   return ( 
     <div className={style.container}>
-      {allPokemons?.map((pokemon, index) => (< Pokemon
+      {currentPokemons?.map((pokemon, index) => (< Pokemon
       key = {index}
       id={pokemon.id}
       img={pokemon.img} 
@@ -12,7 +12,7 @@ const Container = ({allPokemons, lastIndex , firstIndex}) => {
       attack={pokemon.attack}
       name={pokemon.name}
       types={pokemon.Types && pokemon.Types.join(", ")}
-     />)).slice(firstIndex, lastIndex)}
+     />))}
     </div>
   )
 }

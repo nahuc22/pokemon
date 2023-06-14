@@ -4,10 +4,13 @@ const {createPokemonDb, getAllPokemons, getPokemonById, getPokemonByName} = requ
 const createPokemonHandler = async (req, res) => { 
     const { name, img , life , attack , defense ,speed, height ,weight , type} = req.body;
     try {
+        if(attack < 0 || life < 0 || defense < 0 || speed < 0 || height < 0 || weight < 0){
+         return  res.status(400).json({error: "The stats must be higher than 0"})
+        }
         const newPokemon = await createPokemonDb(name, img , life , attack, defense ,speed , height , weight , type);
         res.status(200).json(newPokemon);
     } catch (error) {
-        res.status(400).json({error: error.message})
+        console.log({error: "No se pudo crear el pokemon"})
     }
 }
 const getAllPokemonsHandler = async( req  , res) => {
@@ -22,7 +25,7 @@ const getAllPokemonsHandler = async( req  , res) => {
         const response = await getAllPokemons();
         return res.status(200).json(response);
     } catch (error) {
-        return res.status(400).send({error: error.message});
+        return res.status(400).send({error: 'No se encontró el Pokemon'});
     }
 }
 

@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getPokemons, postPokemon, getType } from "../../redux/Actions";
+import { getPokemons, postPokemon, getTypes } from "../../redux/Actions";
 import style from "../../views/Create/Create.module.css";
-import { NavLink } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const Create = () => {
   const [input, setInput] = useState({
@@ -18,14 +18,18 @@ const Create = () => {
     type: [],
   });
   const [errors, setErrors] = useState({
-    name: "Name es requerido",
-    life: "life es requerido",
-    attack: "Attack es requerido",
+    name: "Name is required",
+    life: "Life is required",
+    attack: "Attack is required",
+    defense: "Defense is required",
+    img: "Image is required",
     type: "",
   });
 
   const dispatch = useDispatch();
+  const history = useHistory();
   const types = useSelector((state) => state.types);
+  
 
   const disable = () => {
     let disabled = true;
@@ -39,10 +43,7 @@ const Create = () => {
     return disabled;
   };
 
-  useEffect(() => {
-    dispatch(getType());
-  }, []);
-
+  
   const validate = (input, name) => {
     if (name === "name") {
       if (input.name !== "") setErrors({ ...errors, name: "" });
@@ -55,9 +56,34 @@ const Create = () => {
     } else if (name === "attack") {
       if (input.attack !== "") setErrors({ ...errors, attack: "" });
       else setErrors({ ...errors, attack: "Attack es requerido" });
+      return;     
+    } else if (name === "defense") {
+      if (input.defense !== "") setErrors({ ...errors, defense: "" });
+      else setErrors({ ...errors, defense: "Defense es requerido" });
+      return;
+    } else if (name === "speed") {
+      if (input.speed !== "") setErrors({ ...errors, speed: "" });
+      else setErrors({ ...errors, speed: "Attack es requerido" });
+      return;
+    } else if (name === "weight") {
+      if (input.weight !== "") setErrors({ ...errors, weight: "" });
+      else setErrors({ ...errors, weight: "Attack es requerido" });
+      return;
+    } else if (name === "height") {
+      if (input.height !== "") setErrors({ ...errors, height: "" });
+      else setErrors({ ...errors, height: "Attack es requerido" });
+      return;
+    } else if (name === "img") {
+      if (input.img !== "") setErrors({ ...errors, img: "" });
+      else setErrors({ ...errors, img: "Imagen es requerido" });
       return;
     }
+
   };
+  
+  useEffect(() => {
+    dispatch(getTypes());
+  }, []);
 
   function handleSelect(event) {
     setInput({
@@ -68,10 +94,15 @@ const Create = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(input);
-    dispatch(postPokemon(input)).then(() => {
-      dispatch(getPokemons());
-    });
+    try {
+      dispatch(postPokemon(input));
+      alert("The pokemon has been created successfully")
+      history.push("/home")
+    }
+    catch {
+      alert('Has been an error');
+    }
+    
   };
 
   const handleChange = (event) => {
@@ -89,9 +120,6 @@ const Create = () => {
   };
   return (
     <div className={style.container}>
-      <button className={style.button}>
-        <NavLink className={style.linkHome}to={"/home"}>Go home</NavLink>
-      </button>
       <form className={style.form} onSubmit={handleSubmit}>
         <h1 className={style.h1}>Create tu pokemon!</h1>
         <div>
@@ -103,17 +131,18 @@ const Create = () => {
             value={input.name}
             onChange={handleChange}
           ></input>
-          {/* {errors.name} */}
+          <p className={style.p}>{errors.name}</p>
 
           <label className={style.label}>Attack:</label>
           <input
             className={style.input}
             name="attack"
             type="number"
+            min = "0"
             value={input.attack}
             onChange={handleChange}
           ></input>
-          {/* {errors.attack} */}
+          <p className={style.p}>{errors.attack}</p>
 
           <label className={style.label}>Life:</label>
           <input
@@ -123,7 +152,7 @@ const Create = () => {
             value={input.life}
             onChange={handleChange}
           ></input>
-          {/* {errors.life} */}
+          <p className={style.p}>{errors.life}</p>
 
           <label className={style.label}>Defense:</label>
           <input
@@ -133,7 +162,7 @@ const Create = () => {
             name="defense"
             onChange={handleChange}
           />
-          {errors.defense}
+          <p className={style.p}>{errors.defense}</p>
 
           <label className={style.label}>Speed:</label>
           <input
@@ -173,16 +202,17 @@ const Create = () => {
             name="img"
             onChange={handleChange}
           />
-          {errors.img}
+          <p className={style.p}>{errors.img}</p>
 
           <label className={style.label}>Types:</label>
           <select className={style.select}onChange={handleSelect}>
+              <option defaultValue="">Types</option>
             {types.map((type) => (
               <option name={type.name}>{type}</option>
             ))}
           </select>
         </div>
-        <input disabled={disable()} type="submit" value="Enviar"></input>
+        <input className={style.inputSubmit}disabled={disable()} type="submit" value="Enviar"></input>
       </form>
     </div>
   );
