@@ -6,7 +6,7 @@ import { Route, useLocation} from 'react-router-dom';
 import Home from './views/Home/Home';
 import Landing from './views/Landing/Landing';
 import axios from 'axios'
-axios.defaults.baseURL = 'http://localhost:3001/'
+axios.defaults.baseURL = 'https://pokemon-production-b60b.up.railway.app/'
 
 function App() {  
   const location = useLocation();
