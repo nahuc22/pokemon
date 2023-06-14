@@ -36,7 +36,7 @@ const Home = () => {
   const handleRefresh = () => {
     dispatch(getPokemons())
     setCurrentPage(1)
-    setPokemonsPerPage(8)
+    setPokemonsPerPage(10)
   }
   
   return (
@@ -54,108 +54,3 @@ const Home = () => {
   )
 };
 export default Home;
-  // const handleChange = (event) => {
-  //   setSearchString(event.target.value);
-  // };
-
-  // const getTypeFilter = (event) => {
-  //   if (event.target.value !== "select") {
-  //     dispatch(getPokemonTypeFilters(event.target.value));
-  //     setType(true);
-  //     setOrder(false);
-  //     setFiltered(false)
-  //     setCurrentPage(1)
-  //   } else {
-  //     setType(false);
-  //     setOrder(false);
-  //     setFiltered(false);
-  //     setCurrentPage(1)
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   if (allPokemons.length === 0) {
-  //     dispatch(getPokemons());
-  //   }
-  //   dispatch(getType());
-  //   setCurrentPage(1);
-  //   setFiltered(false);
-  // }, []);
-
-  // const filterOrd = (event) => {
-  //   if (event.target.value == "0") {
-  //     dispatch(getPokemons());
-  //     setFiltered(false);
-  //     setOrder(false);
-  //     setCurrentPage(1);
-  //   } else {
-  //     dispatch(filter(event.target.value));
-  //     setFiltered(false);
-  //     setOrder(true);
-  //     setCurrentPage(1);
-  //   }
-  // };
-
-  // return (
-  //   <div className={style.container}>
-  //     <div>
-  //       <div>
-  //         <div className={style.selectFilters}>
-  //           <select className={style.select} onChange={filterOrd} name="" id="">
-  //             <option defaultChecked value="0">
-  //               Alfabetico
-  //             </option>
-  //             <option value="asc">A-Z</option>
-  //             <option value="desc">Z-A</option>
-  //           </select>
-
-  //           <select onChange={getTypeFilter}>
-  //             <option value={"select"}>Tipos</option>
-  //             {types.map((type, index) => (
-  //               <option key={index} value={type.name}>
-  //                 {type}
-  //               </option>
-  //             ))}
-  //           </select>
-  //         </div>
-  //             {filtered ? (
-  //               <Container 
-  //                 allPokemons={pokemonsFiltered}
-  //                 lastIndex={lastIndex}
-  //                 firstIndex={firstIndex}
-  //               />
-  //             ) : order ? (
-  //               <Container
-  //                 allPokemons={pokemonsOrder}
-  //                 lastIndex={lastIndex}
-  //                 firstIndex={firstIndex}
-  //               />
-  //             ) : type ? (
-  //               <Container
-  //                 allPokemons={typeFilter}
-  //                 lastIndex={lastIndex}
-  //                 firstIndex={firstIndex}
-  //               />
-  //             ) : (
-  //               <Container
-  //                 allPokemons={allPokemons}
-  //                 lastIndex={lastIndex}
-  //                 firstIndex={firstIndex}
-  //               />
-  //             )}
-  //             <Page
-  //               order={order}
-  //               type={type}
-  //               setOrder={setOrder}
-  //               setType={setType}
-  //               filtered={filtered}
-  //               pokemonsFiltered={pokemonsFiltered}
-  //               currentPage={currentPage}
-  //               pokemonPage={pokemonPage}
-  //               totalPokemons={totalPokemons}
-  //               setCurrentPage={setCurrentPage}
-  //             />
-  //       </div>
-  //     </div>
-  //   </div>
-  // );
