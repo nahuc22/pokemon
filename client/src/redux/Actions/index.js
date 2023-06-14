@@ -6,7 +6,7 @@ export const GET_POKEMONS = "GET_POKEMONS";
 export function getPokemons() {
   return async function (dispatch) {
     try {
-      const pokemons = await axios.get("/pokemons");
+      const pokemons = await axios.get("pokemons");
       dispatch({
         type: GET_POKEMONS,
         payload: pokemons.data,
@@ -42,7 +42,7 @@ export function getPokemonbyId(id) {
   try {
     return async function (dispatch) {
       console.log(id);
-      const pokemon = await axios.get(`/pokemons/${id}`);
+      const pokemon = await axios.get(`pokemons/${id}`);
       dispatch({
         type: GET_BY_ID,
         payload: pokemon.data,
@@ -59,7 +59,7 @@ export const POST_POKEMON = "POST_POKEMON";
 export function postPokemon(info) {
   return async function (dispatch) {
     try {
-      const pokemon = await axios.post("/pokemons", info);
+      const pokemon = await axios.post("pokemons", info);
       if (pokemon) {
         return dispatch({
           type: POST_POKEMON,
@@ -78,7 +78,7 @@ export const GET_TYPES = "GET_TYPES";
 export function getTypes() {
   return async function (dispatch) {
     try {
-      const pokemon = await axios.get("/types");
+      const pokemon = await axios.get("types");
       dispatch({
         type: GET_TYPES,
         payload: pokemon.data,
