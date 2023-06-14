@@ -1,5 +1,5 @@
 import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector} from 'react-redux'
 import { useParams } from 'react-router-dom'
 import style from './Details.module.css'
 
@@ -7,7 +7,6 @@ const Details = () => {
   const { id } = useParams()
   const allPokemons = useSelector((state) => state.allPokemons)
   const pokemon = allPokemons.filter((pokemon) => pokemon.id == id)
-  console.log(pokemon);
   return (
     <div className={style.container}>
       <div class={style.form}>
