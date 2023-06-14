@@ -20,7 +20,7 @@ const Home = () => {
   
   const [order, setOrder] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const [pokemonsPerPage, setPokemonsPerPage] = useState(8)  
+  const [pokemonsPerPage, setPokemonsPerPage] = useState(10)  
   const indexOfLastPokemon = currentPage * pokemonsPerPage
   const indexOfFirstPokemon = indexOfLastPokemon - pokemonsPerPage
   const currentPokemons = allPokemons.slice(indexOfFirstPokemon, indexOfLastPokemon)
