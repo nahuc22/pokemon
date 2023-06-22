@@ -2,7 +2,8 @@ const {createPokemonDb, getAllPokemons, getPokemonById, getPokemonByName} = requ
 
 // ---> pokemon/?name=pikachu&vida=100
 const createPokemonHandler = async (req, res) => { 
-    const { name, img , life , attack , defense ,speed, height ,weight , type} = req.body;
+    const { name, img , life , attack , defense ,speed, height ,weight , type } 
+    = req.body;
     try {
         if(attack < 0 || life < 0 || defense < 0 || speed < 0 || height < 0 || weight < 0){
          return  res.status(400).json({error: "The stats must be higher than 0"})

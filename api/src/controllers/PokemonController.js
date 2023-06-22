@@ -1,6 +1,7 @@
 const { Pokemon , Type } = require('../db.js');
 const axios = require('axios');
 const {Op} = require('sequelize');
+
 const createPokemonDb =  async (name,img, life , attack , defense , speed , weight, height, type) => {
 
         if (name && img && life && attack && defense && speed && height && weight) {
@@ -85,7 +86,6 @@ const getAllPokemons = async (name) => {
             return filterPokemon
         }
     } else {
-        console.log(allPokemon)
         return allPokemon;
     }
 }
