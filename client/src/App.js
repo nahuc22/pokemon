@@ -6,7 +6,7 @@ import { Route, useLocation} from 'react-router-dom';
 import Home from './views/Home/Home';
 import Landing from './views/Landing/Landing';
 import axios from 'axios'
-axios.defaults.baseURL = 'https://pokemon-production-b60b.up.railway.app/'
+axios.defaults.baseURL = 'https://pokemon-ug08.onrender.com/'
 
 function App() {  
   const location = useLocation();
