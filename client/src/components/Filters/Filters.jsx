@@ -22,14 +22,14 @@ const Filters = ({types, setCurrentPage, setOrder}) => {
             <h4>By Types</h4>
             <select onChange={handleTypeFilter}>
                 <option value="all">All</option>
-            {types?.map((type,i) => 
-                <option 
-                    key={i} 
-                    value={type}
-                >
-                {type}
-                </option>)}
-            </select>
+                {types?.map((type,i) => 
+                    <option 
+                        key={i} 
+                        value={type}
+                    >
+                    {type}
+                    </option>)}
+                </select>
             <h4>By Origin</h4>
             <select onChange={handleOriginFilter}>
             <option value="all" >All</option>
